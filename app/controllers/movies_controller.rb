@@ -5,7 +5,7 @@ class MoviesController < ApplicationController
   end
 
   def pull_second_movie
-    render json: {second_movie: Movie.second}
+    render json: {second_movie: Movie.find(2)}
   end
   
   def choose_one_movie
