@@ -10,6 +10,4 @@
 
 # Actor.create(first_name: "", last_name: "", known_for: "")
 
-# Actor.create(first_name: "Chevy", last_name: "Chase", known_for: "Vacation Series")
-# Actor.create(first_name: "Rodney", last_name: "Dangerfield", known_for: "Caddyshack")
-# Actor.create(first_name: "Clint", last_name: "Eastwood", known_for: "The Good, the Bad, and the Ugly")
+# Movie.create(title: , year: , plot: ")
