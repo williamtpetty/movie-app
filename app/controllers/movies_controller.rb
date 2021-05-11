@@ -1,15 +1,39 @@
 class MoviesController < ApplicationController
 
-  def pull_all_movies
-    render json: {all_movies: Movie.all}
+  def index
+    render json: Movie.all.as_json
   end
 
-  def pull_second_movie
-    render json: {second_movie: Movie.find(2)}
+  def create
+    movie = Movie.new(
+      title: params[:title],
+      year: params[:year],
+      plot: params[:plot]
+    )
+    movie.save
+    render json: movie.as_json
   end
   
-  def choose_one_movie
-    user_input_id = params[:id_input].to_i
-    render json: {your_movie: Movie.find_by(id: user_input_id)}
+  def show
+    movie = Movie.find(params[:id])
+    render json: movie.as_json
   end
+
+  def update
+    movie = Movie.find(params[:id])
+    movie.update(
+      title: params[:title] || movie.title,
+      year: params[:year] || movie.year,
+      plot: params[:plot] || movie.plot
+    )
+    movie.save
+    render json: movie.as_json
+  end
+
+  def destroy
+    movie = Movie.find(params[:id])
+    movie.delete
+    render json: {message: "The movie has been removed from the archive"}
+  end
+
 end
