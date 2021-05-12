@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
 
   def index
-    render json: Movie.all.as_json
+    render json: Movie.all
   end
 
   def create
@@ -11,12 +11,12 @@ class MoviesController < ApplicationController
       plot: params[:plot]
     )
     movie.save
-    render json: movie.as_json
+    render json: movie
   end
   
   def show
     movie = Movie.find(params[:id])
-    render json: movie.as_json
+    render json: movie
   end
 
   def update
@@ -27,7 +27,7 @@ class MoviesController < ApplicationController
       plot: params[:plot] || movie.plot
     )
     movie.save
-    render json: movie.as_json
+    render json: movie
   end
 
   def destroy

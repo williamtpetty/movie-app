@@ -1,12 +1,12 @@
 class ActorsController < ApplicationController
 
   def index
-    render json: Actor.all.as_json
+    render json: Actor.all
   end
 
   def show
     actor_choice = Actor.find(params[:id])
-    render json: actor_choice.as_json
+    render json: actor_choice
   end
 
   def create
@@ -16,7 +16,7 @@ class ActorsController < ApplicationController
     known_for: params[:known_for],
     )
     actor.save
-    render json: actor.as_json
+    render json: actor
   end
 
   def update
@@ -27,7 +27,7 @@ class ActorsController < ApplicationController
       known_for: params[:known_for] || actor_choice.known_for,
     )
     actor_choice.save
-    render json: actor_choice.as_json
+    render json: actor_choice
   end
 
   def destroy
