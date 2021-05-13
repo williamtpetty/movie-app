@@ -12,8 +12,11 @@ class MoviesController < ApplicationController
       director: params[:director],
       english: params[:english]
     )
-    movie.save
-    render json: movie
+    if movie.save
+      render json: movie
+    else
+      render json:  {error: movie.errors.full_messages}
+    end
   end
   
   def show
@@ -30,8 +33,11 @@ class MoviesController < ApplicationController
       director: params[:director] || movie.director,
       english: params[:english] || movie.english
     )
-    movie.save
-    render json: movie
+    if movie.save
+      render json: movie
+    else
+      render json:  {error: movie.errors.full_messages}
+    end
   end
 
   def destroy

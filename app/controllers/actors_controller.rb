@@ -5,8 +5,8 @@ class ActorsController < ApplicationController
   end
 
   def show
-    actor_choice = Actor.find(params[:id])
-    render json: actor_choice
+    actor = Actor.find(params[:id])
+    render json: actor
   end
 
   def create
@@ -17,26 +17,32 @@ class ActorsController < ApplicationController
     gender: params[:gender],
     age: params[:age]
     )
-    actor.save
-    render json: actor
+    if actor.save
+      render json: actor
+    else
+      render json: {errors: actor.errors.full_messages}
+    end    
   end
 
   def update
-    actor_choice = Actor.find(params[:id])
-    actor_choice.update(
-      first_name: params[:first_name] || actor_choice.first_name,
-      last_name: params[:last_name] || actor_choice.last_name,
-      known_for: params[:known_for] || actor_choice.known_for,
-      gender: params[:gender] || actor_choice.gender,
-      age: params[:age] || actor_choice.age
+    actor = Actor.find(params[:id])
+    actor.update(
+      first_name: params[:first_name] || actor.first_name,
+      last_name: params[:last_name] || actor.last_name,
+      known_for: params[:known_for] || actor.known_for,
+      gender: params[:gender] || actor.gender,
+      age: params[:age] || actor.age
     )
-    actor_choice.save
-    render json: actor_choice
+    if actor.save
+      render json: actor
+    else
+      render json: {errors: actor.errors.full_messages}
+    end    
   end
 
   def destroy
-    actor_choice = Actor.find(params[:id])
-    actor_choice.delete
-    render json: {message: "The movie has been removed from the archive"}
+    actor = Actor.find(params[:id])
+    actor.delete
+    render json: {message: "The actor has been removed from the archive"}
   end
 end
