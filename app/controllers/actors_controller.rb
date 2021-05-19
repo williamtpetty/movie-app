@@ -17,6 +17,7 @@ class ActorsController < ApplicationController
     known_for: params[:known_for],
     gender: params[:gender],
     age: params[:age],
+    movie_id: params[:movie_id]
     )
 
     # Need to figure this out - turn data into integer if age is not "Deceased"
