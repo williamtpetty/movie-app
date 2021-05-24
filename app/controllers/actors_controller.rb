@@ -1,5 +1,7 @@
 class ActorsController < ApplicationController
 
+  before_action :authenticate_admin, except: [:index, :show]
+
   def index
     actor = Actor.all
     render json: actor.order(age: :desc)
@@ -20,16 +22,12 @@ class ActorsController < ApplicationController
     movie_id: params[:movie_id]
     )
 
-    # Need to figure this out - turn data into integer if age is not "Deceased"
-    # if actor.age != "Deceased" 
-    #   actor.age = params[:age].to_i
-    # end
-    
     if actor.save
       render json: actor
     else
-      render json: {errors: actor.errors.full_messages}
-    end    
+      render json: {errors: actor.errors.full_messages}, status: :unauthorized
+    end 
+
   end
 
   def update
@@ -39,12 +37,14 @@ class ActorsController < ApplicationController
       last_name: params[:last_name] || actor.last_name,
       known_for: params[:known_for] || actor.known_for,
       gender: params[:gender] || actor.gender,
-      age: params[:age],
+      age: params[:age] || actor.age,
+      movie_id: params[:movie_id] || actor.movie_id
     )
 
-    if actor.age != "Deceased"
-      actor.age = params[:age].to_i
-    end
+    # Need to figure this out - turn data into integer if age is not "Deceased"
+    # if actor.age != "Deceased"
+    #   actor.age = params[:age].to_i
+    # end
 
     if actor.save
       render json: actor
