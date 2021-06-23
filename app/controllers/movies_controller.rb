@@ -1,10 +1,10 @@
 class MoviesController < ApplicationController
 
-  before_action :authenticate_admin, except: [:index, :show]
+  before_action :authenticate_admin, except: [:index, :show, :create]
 
   def index
     movie = Movie.all
-    render json: movie.where("english").order(:id)
+    render json: movie
   end
 
   def create
@@ -18,7 +18,7 @@ class MoviesController < ApplicationController
     if movie.save
       render json: movie
     else
-      render json:  {error: movie.errors.full_messages}
+      render json: {errors: movie.errors.full_messages}
     end
   end
   
@@ -39,7 +39,7 @@ class MoviesController < ApplicationController
     if movie.save
       render json: movie
     else
-      render json:  {error: movie.errors.full_messages}
+      render json:  {errors: movie.errors.full_messages}, status: :unprocessable_entity
     end
   end
 
